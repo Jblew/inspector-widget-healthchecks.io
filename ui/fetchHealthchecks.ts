@@ -34,12 +34,26 @@ function timeSince(timestampMs: number) {
 
   v = Math.floor(v / 24); // v is now days
   return v + ' day' + (v == 1 ? '' : 's');
-};
+}
 
-const template: any = document.querySelector('.check-template');
+const template: any = `
+<div class="check-template">
+  <div class="name"></div>
+  <div class="lp"></div>
+  <div class="spinner"></div>
+</div>
+`;
+
+function htmlToElement(html: any) {
+  var template = document.createElement('template');
+  html = html.trim(); // Never return a text node of whitespace as the result
+  template.innerHTML = html;
+  return template.content.firstChild;
+}
 
 export function updateHealthchecksPanel(nodeQuerySelector: string) {
   const node = document.querySelector(nodeQuerySelector) as any;
+  console.log(node);
   fetch(node.dataset.readonlyKey, function (doc: any) {
     let tag = 'TAG_' + node.dataset.readonlyKey.substr(0, 6);
 
@@ -50,7 +64,7 @@ export function updateHealthchecksPanel(nodeQuerySelector: string) {
 
     let fragment = document.createDocumentFragment();
     sorted.forEach(function (item: any) {
-      let div = template.cloneNode(true) as any;
+      let div: any = htmlToElement(template)
       div.setAttribute('class', tag + ' status-' + item.status);
       div.querySelector('.name').textContent = item.name || 'unnamed';
       if (item.last_ping) {

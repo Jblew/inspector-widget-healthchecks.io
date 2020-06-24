@@ -1,6 +1,6 @@
 <template>
   <stateful-resource :resource="healthchecksKeyResource">
-    <healthchecks-module-ui :key="healthchecksKeyResource.result" />
+    <healthchecks-module-ui :hckey="healthchecksKeyResource.result.key" />
   </stateful-resource>
 </template>
 

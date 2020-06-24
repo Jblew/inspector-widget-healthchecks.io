@@ -1,13 +1,9 @@
 <template>
-  <div class="theme-dark">
-    <div class="check-template">
-      <div class="name"></div>
-      <div class="lp"></div>
-      <div class="spinner"></div>
-    </div>
-
-    <div id="healthchecks-panel">
-      <h1 :data-readonly-key="key">Jedrzej healthchecks</h1>
+  <div class="theme-dark-hcmi">
+    <div v-if="hckey" id="healthchecks-panel">
+      <h3 :data-readonly-key="hckey">
+        <a href="https://healthchecks.io/">Healthchecks.io</a>
+      </h3>
     </div>
   </div>
 </template>
@@ -20,12 +16,14 @@ import { updateHealthchecksPanel } from './fetchHealthchecks';
 @Component
 export default class HealthchecksModuleUi extends Vue {
   @Prop({ required: true })
-  key!: string;
+  hckey!: string;
 
   private timer: any = '';
 
   mounted() {
     this.updatePanel();
+
+    console.log({ KEY: this.hckey });
   }
 
   beforeDestroy() {
@@ -35,85 +33,62 @@ export default class HealthchecksModuleUi extends Vue {
   }
 
   private updatePanel() {
-    updateHealthchecksPanel('#healthchecks-panel');
+    updateHealthchecksPanel('#healthchecks-panel h3');
     this.timer = setTimeout(() => this.updatePanel(), 5000);
   }
 }
 
 
 </script>
-<style scoped>
-/* Colors, dark theme */
+<style>
+.theme-dark-hcmi h3 a {
+  color: #bbb;
+  font-weight: 200;
+  font-size: 1.5em;
+  text-decoration: none;
+  border-bottom: 1px solid #bbb;
+}
 
-.theme-dark {
+.theme-dark-hcmi {
   background: #000;
   color: #fff;
 }
 
-.theme-dark #panel > div {
+.theme-dark-hcmi #healthchecks-panel > div {
   background: #aaa;
   color: #000;
 }
 
-.theme-dark #panel > div.status-up {
+.theme-dark-hcmi #healthchecks-panel > div.status-up {
   color: #fff;
   background: #263026;
 }
 
-.theme-dark #panel > div.status-started {
+.theme-dark-hcmi #healthchecks-panel > div.status-started {
   color: #fff;
   background: #263026;
 }
 
-.theme-dark #panel > div.status-grace {
+.theme-dark-hcmi #healthchecks-panel > div.status-grace {
   color: #000;
   background: #ffb300;
 }
 
-.theme-dark #panel > div.status-down {
+.theme-dark-hcmi #healthchecks-panel > div.status-down {
   color: #000;
   background: #ff3929;
 }
 
-.theme-dark .spinner:after {
+.theme-dark-hcmi .spinner:after {
   border-color: #4c604c transparent #4c604c transparent;
 }
 
-/* Colors, light theme */
-
-.theme-light {
-  background: #fff;
-  color: #333;
-}
-
-.theme-light #panel > div {
-  color: #000;
-  background: #fff;
-  border: 2px solid #ddd;
-}
-
-.theme-light #panel > div.status-grace {
-  color: #000;
-  background: #ffab00;
-  border: none;
-}
-
-.theme-light #panel > div.status-down {
-  color: #fff;
-  background: #d81818;
-  border: none;
-}
-
-.theme-light .spinner:after {
-  border-color: #ddd transparent #ddd transparent;
-}
-
 /* Spinner from https://loading.io/css/ */
-.spinner {
+.theme-dark-hcmi .spinner {
   display: none;
 }
 
-div.status-started .spinner {
+.theme-dark-hcmi div.status-started .spinner {
   position: absolute;
   right: 8px;
   top: 50%;
@@ -122,7 +97,7 @@ div.status-started .spinner {
   width: 36px;
   height: 36px;
 }
-.spinner:after {
+.theme-dark-hcmi .spinner:after {
   content: ' ';
   display: block;
   width: 24px;
@@ -144,50 +119,43 @@ div.status-started .spinner {
 
 /* Layout and font */
 
-html,
-body {
-  font-family: -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif;
-  height: 100%;
-  margin: 0;
-}
-
-#panel {
+#healthchecks-panel {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   grid-gap: 8px;
   padding: 8px;
 }
 
-#panel > h1 {
+#healthchecks-panel > h1 {
   grid-column-start: 1;
   grid-column-end: -1;
   margin: 12px 0;
   font-size: 20px;
 }
 
-#panel > div {
+#healthchecks-panel > div {
   padding: 8px 8px 32px 8px;
   font-size: 18px;
   position: relative;
 }
 
-#panel > div .name {
+#healthchecks-panel > div .name {
   text-overflow: ellipsis;
   overflow: hidden;
 }
 
-#panel > div .lp {
+#healthchecks-panel > div .lp {
   position: absolute;
   font-size: 13px;
   opacity: 0.8;
 }
 
-#panel > div .lp {
+#healthchecks-panel > div .lp {
   bottom: 8px;
   left: 8px;
 }
 
-.check-template {
+.theme-dark-hcmi .check-template {
   display: none;
 }
 </style>
