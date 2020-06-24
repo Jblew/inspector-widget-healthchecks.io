@@ -1,3 +1,3 @@
 export const config = {
-    healthchecksIoKeyFirestorePath: "keys/healthchecksio"
-} as const
+  healthchecksIoKeyFirestorePath: 'keys/healthchecksio',
+} as const;

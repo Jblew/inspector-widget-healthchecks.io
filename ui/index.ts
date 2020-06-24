@@ -1,1 +1,1 @@
-export { default as HealthchecksModule } from './HealthchecksModule.vue'
+export { default as HealthchecksModule } from './HealthchecksModule.vue';

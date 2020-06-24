@@ -1,3 +1,4 @@
+/* eslint-disable */
 // Source: https://github.com/healthchecks/dashboard
 function fetch(key: string, callback: any) {
   let httpRequest = new XMLHttpRequest();
