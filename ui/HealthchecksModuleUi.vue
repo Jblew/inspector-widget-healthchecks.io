@@ -14,16 +14,15 @@
 
 <script lang="ts">
 // Based on https://github.com/healthchecks/dashboard
-import { Component, Vue, Prop } from "vue-property-decorator";
-import { StatefulResource, Resource } from "vue-stateful-resource";
-import { updateHealthchecksPanel } from './fetchHealthchecks'
+import { Component, Vue, Prop } from 'vue-property-decorator';
+import { updateHealthchecksPanel } from './fetchHealthchecks';
 
 @Component
 export default class HealthchecksModuleUi extends Vue {
   @Prop({ required: true })
-  key: string
+  key!: string;
 
-  private timer: any = ''
+  private timer: any = '';
 
   mounted() {
     this.updatePanel();
@@ -36,7 +35,7 @@ export default class HealthchecksModuleUi extends Vue {
   }
 
   private updatePanel() {
-    updateHealthchecksPanel('#healthchecks-panel')
+    updateHealthchecksPanel('#healthchecks-panel');
     this.timer = setTimeout(() => this.updatePanel(), 5000);
   }
 }
