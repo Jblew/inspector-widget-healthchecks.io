@@ -20,11 +20,7 @@ export default class HealthchecksModule extends Vue {
   beforeMount() {
     loadKey().then(
       res => this.healthchecksKeyResource = res,
-    )
-  }
-
-  private async loadKey(): Promise<string> {
-
+    ).catch(console.error)
   }
 }
 </script>
