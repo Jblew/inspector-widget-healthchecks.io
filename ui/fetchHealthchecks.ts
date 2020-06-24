@@ -45,15 +45,14 @@ const template: any = `
 `;
 
 function htmlToElement(html: any) {
-  var template = document.createElement('template');
+  var templateElem = document.createElement('template');
   html = html.trim(); // Never return a text node of whitespace as the result
-  template.innerHTML = html;
-  return template.content.firstChild;
+  templateElem.innerHTML = html;
+  return templateElem.content.firstChild;
 }
 
 export function updateHealthchecksPanel(nodeQuerySelector: string) {
   const node = document.querySelector(nodeQuerySelector) as any;
-  console.log(node);
   fetch(node.dataset.readonlyKey, function (doc: any) {
     let tag = 'TAG_' + node.dataset.readonlyKey.substr(0, 6);
 
@@ -64,7 +63,7 @@ export function updateHealthchecksPanel(nodeQuerySelector: string) {
 
     let fragment = document.createDocumentFragment();
     sorted.forEach(function (item: any) {
-      let div: any = htmlToElement(template)
+      let div: any = htmlToElement(template);
       div.setAttribute('class', tag + ' status-' + item.status);
       div.querySelector('.name').textContent = item.name || 'unnamed';
       if (item.last_ping) {
